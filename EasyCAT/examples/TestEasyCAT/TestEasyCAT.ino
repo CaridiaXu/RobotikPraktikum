@@ -26,7 +26,7 @@
 #include <SPI.h>                    // SPI library
 
  
-EasyCAT EASYCAT;                    // EasyCAT istantiation
+EasyCAT EASYCAT(9);                    // EasyCAT istantiation
 
                                     // The constructor allow us to choose the pin used for the EasyCAT SPI chip select 
                                     // Without any parameter pin 9 will be used 

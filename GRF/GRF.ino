@@ -4,7 +4,7 @@
 
 
 //Ethercat 
-EasyCAT EASYCAT(9);  //EasyCAT SPI chip select. Standard is pin 9
+EasyCAT EASYCAT(10);  //EasyCAT SPI chip select. Standard is pin 9
 
 
   //Force Sensors
@@ -54,34 +54,45 @@ void setup(){
   digitalWrite(Operate,HIGH);
 
   //Ethercat
-    if (EASYCAT.Init() == true)                                     // initialization
-  {                                                               // succesfully completed
-//Serial.print ("initialized");                                 //
-  }                                                               //
+
+  while (EASYCAT.Init() != true)                                     // initialization
+    {                                                               // succesfully completed
+    Serial.println ("EASYCAT initialization failed"); 
+    delay(500);                                //
+    }                                                               //
   
-  else                                                            // initialization failed   
-  {                                                               // the EasyCAT board was not recognized
-    //Serial.print ("initialization failed");                       //     
-    //Serial.print('\n');
-                                                                  // The most common reason is that the SPI 
-                                                                  // chip select choosen on the board doesn't 
-                                                                  // match the one choosen by the firmware
+    // else                                                            // initialization failed   
+    // {                                                               // the EasyCAT board was not recognized
+    Serial.println ("EASYCAT initialization succesful");  
+
+//     if (EASYCAT.Init() == true)                                     // initialization
+//   {                                                               // succesfully completed
+// Serial.print ("initialized");                                 //
+//   }                                                               //
+  
+//   else                                                            // initialization failed   
+//   {                                                               // the EasyCAT board was not recognized
+//     Serial.print ("initialization failed");                       //     
+//     Serial.print('\n');
+//                                                                   // The most common reason is that the SPI 
+//                                                                   // chip select choosen on the board doesn't 
+//                                                                   // match the one choosen by the firmware
                                                                   
-    pinMode(13, OUTPUT);                                          // stay in loop for ever
-                                                                  // with the Arduino led blinking
-    while(1)                                                      //
-    {                                                             //   
-      digitalWrite (13, LOW);                                     // 
-      delay(500);                                                 //   
-      digitalWrite (13, HIGH);                                    //  
-      delay(500);                                                 // 
-    }                                                             // 
+//     pinMode(13, OUTPUT);                                          // stay in loop for ever
+//                                                                   // with the Arduino led blinking
+//     while(1)                                                      //
+//     {                                                             //   
+//       digitalWrite (13, LOW);                                     // 
+//       delay(500);                                                 //   
+//       digitalWrite (13, HIGH);                                    //  
+//       delay(500);                                                 // 
+//     }                                                             // 
    
-  } 
-   // Initialize Timer1 to run every 0.5 seconds (twice per second)
-  Timer1.initialize(5000);
-  // Execute for each interruption the function parpadearLED()
-  Timer1.attachInterrupt(Reading);
+//   } 
+//    // Initialize Timer1 to run every 0.5 seconds (twice per second)
+//   //  Timer1.initialize(5000);
+//   // // // Execute for each interruption the function parpadearLED()
+  //  Timer1.attachInterrupt(Reading);
   
 }
 
@@ -119,7 +130,7 @@ void Reading ()
       digitalWrite(Operate,HIGH);
     }
   des_pos=EASYCAT.BufferOut.Byte[1];
-  Serial.write(des_pos);
+  //Serial.write(c);
 //  if (EASYCAT.BufferOut.Byte[2] == 1)
 //  {
 //    digitalWrite(motor_pin,HIGH)
